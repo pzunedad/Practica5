@@ -3,7 +3,7 @@ type Pokemon {
     id: ID!
     name: String!
     abilities: [Ability!]!
-    moves: [Move!]!
+    moves: [Moves!]!
   }
 
   type Ability {
@@ -17,9 +17,10 @@ type Pokemon {
   }
 
 type Query {
-  Pokemon(id: ID!, name: String!): Pokemon
+  pokemonByID(id: ID!): Pokemon!
+  pokemonByName(name: String!): Pokemon!
   abilitiesByPokemon(id: ID!, name: String!): [Ability!]!
-  movesByPokemon(id: ID!, name: String!): [Move!]!
+  movesByPokemon(id: ID!, name: String!): [Moves!]!
 }
 
 `;

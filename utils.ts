@@ -1,35 +1,18 @@
-import {Pokemon, Ability, Move, PokemonModel, AbilityModel, MoveModel} from "./types.ts";
+import {Pokemon, Ability, Move} from "./types.ts";
+import mongoose from "mongoose";
 
-export const fromModelToPokemon = (pokemonModel: PokemonModel, abilities: Ability[], moves: Move[]): Pokemon => {
-    return {
-        id: pokemonModel._id!.toString(),
-        name: pokemonModel.name,
-        abilities,
-        moves,
-    };
-};
+const schema = mongoose.Schema;
 
-export const fromModelToAbility = (abilityModel: AbilityModel): Ability => {
-    return{
-        id: abilityModel._id!.toString(),
-        name: abilityModel.name,
-        effect: abilityModel.effect,
-    }
-}
 
-export const fromModelToMove = (moveModel: MoveModel): Move => {
-    return{
-        id: moveModel._id!.toString(),
-        name: moveModel.name,
-        power: moveModel.power,
-    }
-}
-
-export const fetchPokemon = async (): Promise<string> => {
-    const response = await fetch("https://pokeapi.co/");
+export const fetchPokemon = async (
+    _: unknown,
+    args: (name : String)
+) => {
+    const response = await fetch("https://pokeapi.co/" + args.name );
     if(!response.ok){
         return "No Pokemon available at the moment.";
     }
     const data  = await response.json();
-    return data.setup + " - " + data.punchline; 
+    console.log(data);
+    //return data.setup + " - " + data.punchline; 
 };
