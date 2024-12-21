@@ -1,6 +1,6 @@
 export const schema = `#graphql
 type Pokemon {
-    id: ID!
+    id: Int!
     name: String!
     abilities: [Ability!]!
     moves: [Moves!]!
@@ -13,14 +13,10 @@ type Pokemon {
 
   type Moves {
     name: String!
-    power: String!
+    power: Int!
   }
 
 type Query {
-  pokemonByID(id: ID!): Pokemon!
-  pokemonByName(name: String!): Pokemon!
-  abilitiesByPokemon(id: ID!, name: String!): [Ability!]!
-  movesByPokemon(id: ID!, name: String!): [Moves!]!
+  pokemon(id: Int!, name: String!): Pokemon!
 }
-
 `;
