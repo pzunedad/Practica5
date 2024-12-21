@@ -1,40 +1,34 @@
-import { Pokemon, Ability } from "./types.ts";
-import { fetchPokemon } from "./utils.ts";
-import { Move } from "./types.ts";
+import { Pokemon, Ability, Move} from "./types.ts";
+import { fetchPokemon, fetchPokemonAbility, fetchPokemonMoves } from "./utils.ts";
 
 export const resolvers = {
+    /*
+    Query: {
+        pokemon: async (
+          _: unknown,
+          args: { id?: number; name?: string },
+          __: unknown,
+        ): Promise<Pokemon | null> => {
+
+      },
+      */
     Pokemon: {
-        abilities: async (
+        abilities:(
             parent: Pokemon,
             _: unknown,
             __: unknown,
         ): Promise<Ability[]> => {
-            return await Promise.all(
-                parent.abilities.map(async (abilityInfo: any) => {
-                    const effect = await fetchPokemon(abilityInfo.ability.url);
-                    return {
-                        slot: abilityInfo.slot,
-                        name: abilityInfo.ability.name,
-                        effect,
-                    };
-                })
-            );
+            const abilities = parent.abilities;
+            return Promise.all(abilities.map(a => fetchPokemonAbility(a.name)));
         },
 
-        moves: async (
+        moves:(
             parent: Pokemon,
             _: unknown,
+            __:unknown,
         ): Promise<Move[]> => {
-            return await Promise.all(
-                parent.moves.map(async (moveInfo: any) => {
-                    const effect = await fetchPokemon(moveInfo.move.url.split('/').slice(-2, -1)[0]);
-                    const power = parseInt(effect, 10) || 0; // Convertir el efecto a número
-                    return {
-                        name: moveInfo.move.name,
-                        power, 
-                    };
-                })
-            );
+            const moves = parent.moves;
+            return Promise.all(moves.map(m => fetchPokemonMoves(m.name)));
         }
     }
 };
