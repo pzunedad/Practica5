@@ -45,7 +45,6 @@ export const resolvers = {
   },
 };
 
-// Helper function to fetch abilities
 const fetchAbilities = async (abilities: any[]): Promise<Ability[]> => {
   return Promise.all(
     abilities.map(async ({ ability }: any) => {
@@ -70,7 +69,6 @@ const fetchAbilities = async (abilities: any[]): Promise<Ability[]> => {
   );
 };
 
-// Helper function to fetch moves
 const fetchMoves = async (moves: any[]): Promise<Move[]> => {
   return Promise.all(
     moves.map(async ({ move }: any) => {
